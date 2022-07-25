@@ -65,7 +65,8 @@ export default function Input() {
         <div className="w-full divide-y divide-gray-200">
             
             <div className="">
-            <textarea  className="w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700" rows="2" placeholder="What's happening?" 
+            <textarea  className="w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700" rows="2" 
+            placeholder="What's happening?" 
             value={input}
             onChange={(e) => setInput(e.target.value)}>
             </textarea>
@@ -73,7 +74,7 @@ export default function Input() {
             {selectedFile && (
               <div className="relative">
                 <XIcon onClick={() => setSelectedFile(null)}
-                className="h-7 text-black absolute cursor-pointer shadow-md shadow-white rounded-full"/>
+                className="border h-7 text-black absolute cursor-pointer shadow-md border-white m-1 rounded-full"/>
                 <img src={selectedFile} className={`${loading && "animate-pulse"}`}/>
               </div>
             )}
