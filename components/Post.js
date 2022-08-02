@@ -13,15 +13,23 @@ import { modalState, postIdState } from "../atom/modalAtom";
 export default function Post({ post }) {
   const { data: session} = useSession();
   const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
   const [hasliked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState)
-  const [postId, setPostId] = useRecoilState(postIdState)
+  const [postId, setPostId] = useRecoilState(postIdState);
 
   useEffect(() => {
     const unsubcribe = onSnapshot(
       collection(db, "posts", post.id, "likes"),(snapshot)=>setLikes(snapshot.docs)
     )
   }, [db]);
+
+  useEffect(() => {
+    const unsubcribe = onSnapshot(
+      collection(db, "posts", post.id, "comments"),(snapshot)=>setComments(snapshot.docs)
+    )
+  }, [db]);
+  
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like)=>like.id === session?.user.uid) !== -1);
@@ -58,7 +66,7 @@ export default function Post({ post }) {
     <img className="h-11 w-11 rounded-full mr-4"
     src={post.data().userImg} alt="user-img" />
     {/*rightside*/}
-    <div className="">
+    <div className="flex-1">
     {/*Headers*/}
     <div className=" flex items-center justify-between">
         {/*user info */}
@@ -83,6 +91,7 @@ export default function Post({ post }) {
     src={post.data().image} alt="" />
     {/*icons */}
     <div className="flex justify-between text-gray-500 p-2">
+      <div className="flex items-center select-none">
         <ChatIcon onClick={() => {
           if(!session){
             signIn();
@@ -91,7 +100,9 @@ export default function Post({ post }) {
               setOpen(!open);
             }
         }}
-        className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
+        className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/> 
+        {comments.length > 0 && <span className= "text-sm ">{comments.length}</span>}
+        </div>
         {session?.user.uid === post?.data().id && (
           <TrashIcon onClick={deletePost}className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"/>
           )}
