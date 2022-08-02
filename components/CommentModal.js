@@ -21,8 +21,9 @@ export default function CommentModal() {
       onSnapshot(doc(db, "posts", postId), (snapshot) => {setPost(snapshot);
       });
     }, [postId, db]);
+
     async function sendComment(){
-      await addDoc(collection(db, "posts", postId, "comment"),{
+      await addDoc(collection(db, "posts", postId, "comments"),{
         comment: input,
         name: session.user.name,
         username: session.user.username,
@@ -31,7 +32,7 @@ export default function CommentModal() {
       })
       setOpen(false)
       setInput("");
-      router.push(`posts/${postId}`)
+      router.push(`posts/${postId}`);
     }
   return (
   <div>

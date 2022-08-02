@@ -26,8 +26,8 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const unsubcribe = onSnapshot(
-      collection(db, "posts", post.id, "comments"),(snapshot)=>setComments(snapshot.docs)
-    )
+      collection(db, "posts", post.id, "comments"),(snapshot) => setComments(snapshot.docs)
+    );
   }, [db]);
   
 
@@ -101,7 +101,7 @@ export default function Post({ post }) {
             }
         }}
         className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/> 
-        {comments.length > 0 && <span className= "text-sm ">{comments.length}</span>}
+        {comments.length > 0 && <span>{comments.length}</span>}
         </div>
         {session?.user.uid === post?.data().id && (
           <TrashIcon onClick={deletePost}className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"/>
