@@ -31,6 +31,7 @@ export default function Home({newsResults, randomUsersResults}) {
 
 
 
+
       </main>
       
      
