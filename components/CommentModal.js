@@ -2,7 +2,7 @@ import {useRecoilState} from "recoil";
 import {modalState, postIdState} from "../atom/modalAtom";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
-import {EmojiHappyIcon, PhotographIcon, XIcon} from "@heroicons/react/outline";
+import {EmojiHappyIcon, PhotographIcon, UserAddIcon, XIcon} from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import Moment from "react-moment";
@@ -28,8 +28,10 @@ export default function CommentModal() {
         name: session.user.name,
         username: session.user.username,
         userImg: session.user.image,
-        timestamp: serverTimestamp()
-      })
+        timestamp: serverTimestamp(),
+        userId: session.user.uid,
+      });
+
       setOpen(false)
       setInput("");
       router.push(`/posts/${postId}`);
